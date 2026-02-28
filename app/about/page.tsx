@@ -4,7 +4,18 @@ import { SectionHeading } from "@/components/section-heading";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn about Coin Shield's focus on precision, quality consistency, and collector-first product design."
+    "Learn about Coin Shield's focus on precision, quality consistency, and collector-first product design.",
+  openGraph: {
+    title: "About Coin Shield",
+    description:
+      "Learn about Coin Shield's focus on precision, quality consistency, and collector-first product design.",
+    url: "https://www.coinshieldproducts.com/about"
+  },
+  twitter: {
+    title: "About Coin Shield",
+    description:
+      "Learn about Coin Shield's focus on precision, quality consistency, and collector-first product design."
+  }
 };
 
 export default function AboutPage() {
@@ -12,6 +23,7 @@ export default function AboutPage() {
     <div className="container-shell py-12 sm:py-16">
       <div className="grid gap-8">
         <SectionHeading
+          as="h1"
           eyebrow="About Coin Shield"
           title="A manufacturer brand focused on presentation, consistency, and collector-first design"
           description="Coin Shield is built to serve businesses and collectors who value dependable product fit, clean presentation, and straightforward supply."

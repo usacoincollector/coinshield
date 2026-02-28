@@ -33,7 +33,16 @@ export async function generateMetadata({
 
   return {
     title: product.name,
-    description: product.positioning
+    description: product.positioning,
+    openGraph: {
+      title: product.name,
+      description: product.positioning,
+      url: `https://www.coinshieldproducts.com/products/${product.slug}`
+    },
+    twitter: {
+      title: product.name,
+      description: product.positioning
+    }
   };
 }
 
@@ -46,8 +55,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   const datasheetPath = getDatasheetPath(product.slug);
-  const hasDatasheet = Boolean(datasheetPath);
-
   return (
     <div className="container-shell py-12 sm:py-16">
       <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">

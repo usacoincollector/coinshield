@@ -5,7 +5,18 @@ import { SectionHeading } from "@/components/section-heading";
 export const metadata: Metadata = {
   title: "Wholesale Inquiries",
   description:
-    "Submit a wholesale inquiry for Coin Shield products, including estimated monthly volume and product interest."
+    "Submit a wholesale inquiry for Coin Shield products, including estimated monthly volume and product interest.",
+  openGraph: {
+    title: "Wholesale Inquiries",
+    description:
+      "Submit a wholesale inquiry for Coin Shield products, including estimated monthly volume and product interest.",
+    url: "https://www.coinshieldproducts.com/wholesale"
+  },
+  twitter: {
+    title: "Wholesale Inquiries",
+    description:
+      "Submit a wholesale inquiry for Coin Shield products, including estimated monthly volume and product interest."
+  }
 };
 
 export default function WholesalePage() {
@@ -14,6 +25,7 @@ export default function WholesalePage() {
       <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
         <section className="space-y-6">
           <SectionHeading
+            as="h1"
             eyebrow="Wholesale Program"
             title="Built for dealers, distributors, and serious marketplace operators"
             description="Coin Shield supports wholesale conversations focused on consistent quality, practical packaging, and straightforward fulfillment."
@@ -29,9 +41,9 @@ export default function WholesalePage() {
           <div className="space-y-4 rounded-[2rem] border border-[var(--border)] bg-[var(--surface-soft)] p-6 sm:p-8">
             <h2 className="text-xl font-semibold">Review process</h2>
             <p className="text-sm leading-7 text-[var(--muted)]">
-              For v1, inquiries submit to a server-side email stub. That keeps
-              the site simple while preserving the API surface needed for future
-              transactional email integration.
+              Each inquiry is reviewed manually so we can respond with the right
+              product mix, packaging guidance, and next-step information for
+              your business.
             </p>
           </div>
         </section>

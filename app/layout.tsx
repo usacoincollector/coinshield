@@ -15,7 +15,7 @@ const sourceSerif = Source_Serif_4({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://coinshieldproducts.com"),
+  metadataBase: new URL("https://www.coinshieldproducts.com"),
   title: {
     default: "Coin Shield | Premium Coin Storage & Protection Supplies",
     template: "%s | Coin Shield"
@@ -30,11 +30,14 @@ export const metadata: Metadata = {
     "wholesale coin supplies",
     "coin storage boxes"
   ],
+  alternates: {
+    canonical: "/"
+  },
   openGraph: {
     title: "Coin Shield | Premium Coin Storage & Protection Supplies",
     description:
       "Archival-safe, collector-trusted coin storage and protection supplies for long-term preservation.",
-    url: "https://coinshieldproducts.com",
+    url: "https://www.coinshieldproducts.com",
     siteName: "Coin Shield",
     locale: "en_US",
     type: "website"

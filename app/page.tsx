@@ -14,7 +14,18 @@ import { featuredProducts } from "@/data/products";
 export const metadata: Metadata = {
   title: "Premium Coin Storage & Protection Supplies",
   description:
-    "Professional manufacturer site for Coin Shield coin flips, currency toploaders, and storage boxes."
+    "Professional manufacturer site for Coin Shield coin flips, currency toploaders, and storage boxes.",
+  openGraph: {
+    title: "Coin Shield - Premium Coin Storage & Protection Supplies",
+    description:
+      "Professional manufacturer site for Coin Shield coin flips, currency toploaders, and storage boxes.",
+    url: "https://www.coinshieldproducts.com/"
+  },
+  twitter: {
+    title: "Coin Shield - Premium Coin Storage & Protection Supplies",
+    description:
+      "Professional manufacturer site for Coin Shield coin flips, currency toploaders, and storage boxes."
+  }
 };
 
 const trustPoints = [

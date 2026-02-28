@@ -6,13 +6,25 @@ import { products } from "@/data/products";
 export const metadata: Metadata = {
   title: "Products",
   description:
-    "Browse Coin Shield coin flips, storage boxes, and currency protection products."
+    "Browse Coin Shield coin flips, storage boxes, and currency protection products.",
+  openGraph: {
+    title: "Coin Shield Products",
+    description:
+      "Browse Coin Shield coin flips, storage boxes, and currency protection products.",
+    url: "https://www.coinshieldproducts.com/products"
+  },
+  twitter: {
+    title: "Coin Shield Products",
+    description:
+      "Browse Coin Shield coin flips, storage boxes, and currency protection products."
+  }
 };
 
 export default function ProductsPage() {
   return (
     <div className="container-shell py-12 sm:py-16">
       <SectionHeading
+        as="h1"
         eyebrow="Product Catalog"
         title="Professional storage and protection supplies for coin and currency handling"
         description="This catalog is designed for a straightforward wholesale review flow, with clean specs, use cases, and future-ready datasheet support."

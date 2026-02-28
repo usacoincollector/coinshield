@@ -5,7 +5,18 @@ import { SectionHeading } from "@/components/section-heading";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Contact Coin Shield for general questions and wholesale follow-up."
+  description: "Contact Coin Shield for general questions and wholesale follow-up.",
+  openGraph: {
+    title: "Contact Coin Shield",
+    description:
+      "Contact Coin Shield for general questions and wholesale follow-up.",
+    url: "https://www.coinshieldproducts.com/contact"
+  },
+  twitter: {
+    title: "Contact Coin Shield",
+    description:
+      "Contact Coin Shield for general questions and wholesale follow-up."
+  }
 };
 
 export default function ContactPage() {
@@ -14,6 +25,7 @@ export default function ContactPage() {
       <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
         <section className="space-y-6">
           <SectionHeading
+            as="h1"
             eyebrow="Contact"
             title="General questions, product follow-up, and wholesale coordination"
             description="For quick contact, email the Coin Shield team directly or use the form below."

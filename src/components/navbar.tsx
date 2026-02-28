@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   { href: "/products", label: "Products" },
@@ -9,6 +12,8 @@ const navLinks = [
 ];
 
 export function Navbar() {
+  const pathname = usePathname();
+
   return (
     <header className="sticky top-0 z-50 border-b border-[rgba(215,209,197,0.8)] bg-[rgba(248,246,241,0.9)] backdrop-blur-xl">
       <div className="container-shell py-4">
@@ -40,16 +45,33 @@ export function Navbar() {
           </Link>
         </div>
 
-        <nav className="mt-4 flex flex-wrap items-center gap-4 border-t border-[rgba(215,209,197,0.7)] pt-4 md:mt-0 md:border-0 md:pt-0">
+        <nav className="mt-4 flex flex-wrap items-center gap-3 border-t border-[rgba(215,209,197,0.7)] pt-4 md:mt-0 md:border-0 md:pt-0">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-semibold text-[var(--muted)] transition hover:text-[var(--foreground)]"
+              aria-current={
+                pathname === link.href ||
+                (link.href !== "/" && pathname.startsWith(`${link.href}/`))
+                  ? "page"
+                  : undefined
+              }
+              className={`rounded-full px-3 py-2 text-sm font-semibold transition ${
+                pathname === link.href ||
+                (link.href !== "/" && pathname.startsWith(`${link.href}/`))
+                  ? "bg-[rgba(184,135,28,0.12)] text-[var(--accent-strong)]"
+                  : "text-[var(--muted)] hover:text-[var(--foreground)]"
+              }`}
             >
               {link.label}
             </Link>
           ))}
+          <Link
+            href="/wholesale"
+            className="ml-auto inline-flex rounded-full border border-[var(--border)] bg-white px-4 py-2 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--accent)] md:hidden"
+          >
+            Inquiry
+          </Link>
         </nav>
       </div>
     </header>
