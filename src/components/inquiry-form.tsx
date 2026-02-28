@@ -10,7 +10,18 @@ type InquiryFormProps = {
 type FormState = {
   status: "idle" | "success" | "error";
   message?: string;
+  fieldErrors?: Partial<Record<FormFieldName, string>>;
 };
+
+type FormFieldName =
+  | "fullName"
+  | "companyName"
+  | "email"
+  | "phone"
+  | "website"
+  | "monthlyVolume"
+  | "productsInterested"
+  | "message";
 
 const volumeOptions = [
   "Under 100 units",
@@ -50,15 +61,26 @@ export function InquiryForm({ variant }: InquiryFormProps) {
         body: JSON.stringify(payload)
       });
 
-      const result = (await response.json()) as { message?: string; success: boolean };
+      const result = (await response.json()) as {
+        message?: string;
+        success: boolean;
+        errors?: Record<string, string[] | undefined>;
+      };
 
       if (!response.ok || !result.success) {
-        throw new Error(result.message ?? "Something went wrong.");
+        const fieldErrors = normalizeFieldErrors(result.errors);
+        setFormState({
+          status: "error",
+          message: result.message ?? "Something went wrong.",
+          fieldErrors
+        });
+        return;
       }
 
       setFormState({
         status: "success",
-        message: result.message
+        message: result.message,
+        fieldErrors: {}
       });
 
       const form = document.getElementById(`${variant}-form`) as HTMLFormElement | null;
@@ -67,7 +89,8 @@ export function InquiryForm({ variant }: InquiryFormProps) {
       setFormState({
         status: "error",
         message:
-          error instanceof Error ? error.message : "Unable to submit the form."
+          error instanceof Error ? error.message : "Unable to submit the form.",
+        fieldErrors: {}
       });
     } finally {
       setIsSubmitting(false);
@@ -108,7 +131,17 @@ export function InquiryForm({ variant }: InquiryFormProps) {
               name="fullName"
               type="text"
               required
-              className="w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--accent)]"
+              aria-invalid={Boolean(formState.fieldErrors?.fullName)}
+              aria-describedby={
+                formState.fieldErrors?.fullName
+                  ? `${variant}-fullName-error`
+                  : undefined
+              }
+              className={getInputClassName(Boolean(formState.fieldErrors?.fullName))}
+            />
+            <FieldError
+              id={`${variant}-fullName-error`}
+              message={formState.fieldErrors?.fullName}
             />
           </Field>
           <Field
@@ -121,7 +154,17 @@ export function InquiryForm({ variant }: InquiryFormProps) {
               name="companyName"
               type="text"
               required={variant === "wholesale"}
-              className="w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--accent)]"
+              aria-invalid={Boolean(formState.fieldErrors?.companyName)}
+              aria-describedby={
+                formState.fieldErrors?.companyName
+                  ? `${variant}-companyName-error`
+                  : undefined
+              }
+              className={getInputClassName(Boolean(formState.fieldErrors?.companyName))}
+            />
+            <FieldError
+              id={`${variant}-companyName-error`}
+              message={formState.fieldErrors?.companyName}
             />
           </Field>
         </div>
@@ -133,7 +176,15 @@ export function InquiryForm({ variant }: InquiryFormProps) {
               name="email"
               type="email"
               required
-              className="w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--accent)]"
+              aria-invalid={Boolean(formState.fieldErrors?.email)}
+              aria-describedby={
+                formState.fieldErrors?.email ? `${variant}-email-error` : undefined
+              }
+              className={getInputClassName(Boolean(formState.fieldErrors?.email))}
+            />
+            <FieldError
+              id={`${variant}-email-error`}
+              message={formState.fieldErrors?.email}
             />
           </Field>
           <Field label="Phone (optional)" htmlFor={`${variant}-phone`}>
@@ -141,7 +192,15 @@ export function InquiryForm({ variant }: InquiryFormProps) {
               id={`${variant}-phone`}
               name="phone"
               type="tel"
-              className="w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--accent)]"
+              aria-invalid={Boolean(formState.fieldErrors?.phone)}
+              aria-describedby={
+                formState.fieldErrors?.phone ? `${variant}-phone-error` : undefined
+              }
+              className={getInputClassName(Boolean(formState.fieldErrors?.phone))}
+            />
+            <FieldError
+              id={`${variant}-phone-error`}
+              message={formState.fieldErrors?.phone}
             />
           </Field>
         </div>
@@ -155,7 +214,15 @@ export function InquiryForm({ variant }: InquiryFormProps) {
             name="website"
             type="url"
             placeholder="https://"
-            className="w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--accent)]"
+            aria-invalid={Boolean(formState.fieldErrors?.website)}
+            aria-describedby={
+              formState.fieldErrors?.website ? `${variant}-website-error` : undefined
+            }
+            className={getInputClassName(Boolean(formState.fieldErrors?.website))}
+          />
+          <FieldError
+            id={`${variant}-website-error`}
+            message={formState.fieldErrors?.website}
           />
         </Field>
 
@@ -167,7 +234,15 @@ export function InquiryForm({ variant }: InquiryFormProps) {
                 name="monthlyVolume"
                 required
                 defaultValue=""
-                className="w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--accent)]"
+                aria-invalid={Boolean(formState.fieldErrors?.monthlyVolume)}
+                aria-describedby={
+                  formState.fieldErrors?.monthlyVolume
+                    ? `${variant}-monthlyVolume-error`
+                    : undefined
+                }
+                className={getInputClassName(
+                  Boolean(formState.fieldErrors?.monthlyVolume)
+                )}
               >
                 <option value="" disabled>
                   Select volume
@@ -178,6 +253,10 @@ export function InquiryForm({ variant }: InquiryFormProps) {
                   </option>
                 ))}
               </select>
+              <FieldError
+                id={`${variant}-monthlyVolume-error`}
+                message={formState.fieldErrors?.monthlyVolume}
+              />
             </Field>
 
             <fieldset className="grid gap-3">
@@ -200,6 +279,10 @@ export function InquiryForm({ variant }: InquiryFormProps) {
                   </label>
                 ))}
               </div>
+              <FieldError
+                id={`${variant}-productsInterested-error`}
+                message={formState.fieldErrors?.productsInterested}
+              />
             </fieldset>
           </>
         ) : null}
@@ -210,7 +293,15 @@ export function InquiryForm({ variant }: InquiryFormProps) {
             name="message"
             required
             rows={6}
-            className="w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--accent)]"
+            aria-invalid={Boolean(formState.fieldErrors?.message)}
+            aria-describedby={
+              formState.fieldErrors?.message ? `${variant}-message-error` : undefined
+            }
+            className={getInputClassName(Boolean(formState.fieldErrors?.message))}
+          />
+          <FieldError
+            id={`${variant}-message-error`}
+            message={formState.fieldErrors?.message}
           />
         </Field>
 
@@ -255,4 +346,41 @@ function Field({ children, htmlFor, label, required = false }: FieldProps) {
       {children}
     </label>
   );
+}
+
+type FieldErrorProps = {
+  id: string;
+  message?: string;
+};
+
+function FieldError({ id, message }: FieldErrorProps) {
+  if (!message) {
+    return null;
+  }
+
+  return (
+    <span id={id} className="text-sm text-red-700">
+      {message}
+    </span>
+  );
+}
+
+function getInputClassName(hasError: boolean) {
+  return `w-full rounded-2xl border bg-white px-4 py-3 text-sm outline-none transition ${
+    hasError
+      ? "border-red-300 focus:border-red-500"
+      : "border-[var(--border)] focus:border-[var(--accent)]"
+  }`;
+}
+
+function normalizeFieldErrors(errors?: Record<string, string[] | undefined>) {
+  if (!errors) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Object.entries(errors)
+      .filter(([, value]) => Array.isArray(value) && value.length > 0)
+      .map(([key, value]) => [key, value?.[0] ?? "Invalid value."])
+  ) as Partial<Record<FormFieldName, string>>;
 }
