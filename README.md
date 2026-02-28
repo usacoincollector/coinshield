@@ -15,6 +15,16 @@ Open `http://localhost:3000`.
 
 Edit product content in `src/data/products.ts`.
 
+## Email delivery
+
+The wholesale and contact forms send email through Mailgun. Set these environment variables in Vercel:
+
+- `MAILGUN_API_KEY`
+- `MAILGUN_DOMAIN`
+- `MAILGUN_API_BASE_URL` (`https://api.mailgun.net` for US, `https://api.eu.mailgun.net` for EU)
+- `INQUIRY_TO_EMAIL`
+- `INQUIRY_FROM_EMAIL`
+
 ## Data sheets
 
 Add PDF files to `public/datasheets/` using the product slug as the filename:

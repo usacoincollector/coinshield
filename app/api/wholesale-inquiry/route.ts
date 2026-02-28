@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { sendInquiryEmail } from "@/lib/email";
 import { inquirySchema } from "@/lib/validation";
 
 const WINDOW_MS = 60_000;
@@ -95,11 +96,25 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  console.log("[Coin Shield inquiry stub]", {
-    receivedAt: new Date().toISOString(),
-    ip,
-    payload: parsed.data
-  });
+  try {
+    await sendInquiryEmail(parsed.data);
+  } catch (error) {
+    console.error("[Coin Shield inquiry email failure]", {
+      receivedAt: new Date().toISOString(),
+      ip,
+      payload: parsed.data,
+      error
+    });
+
+    return NextResponse.json(
+      {
+        success: false,
+        message:
+          "We could not deliver your message right now. Please email hello@coinshieldproducts.com directly."
+      },
+      { status: 503 }
+    );
+  }
 
   return NextResponse.json({
     success: true,
