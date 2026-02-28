@@ -140,7 +140,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               filename.
             </p>
             <div className="mt-5">
-              {hasDatasheet ? (
+              {datasheetPath ? (
                 <Link
                   href={datasheetPath}
                   className="inline-flex items-center gap-2 rounded-full bg-[var(--foreground)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#0d141b]"
