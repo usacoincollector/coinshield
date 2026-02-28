@@ -10,29 +10,26 @@ type InquiryPayload = {
   message: string;
 };
 
-type MailgunConfig = {
+type ResendConfig = {
   apiKey: string;
-  domain: string;
   apiBaseUrl: string;
   toEmail: string;
   fromEmail: string;
 };
 
-function getMailgunConfig(): MailgunConfig | null {
-  const apiKey = process.env.MAILGUN_API_KEY;
-  const domain = process.env.MAILGUN_DOMAIN;
+function getResendConfig(): ResendConfig | null {
+  const apiKey = process.env.RESEND_API_KEY;
   const toEmail = process.env.INQUIRY_TO_EMAIL;
   const fromEmail = process.env.INQUIRY_FROM_EMAIL;
   const apiBaseUrl =
-    process.env.MAILGUN_API_BASE_URL ?? "https://api.mailgun.net";
+    process.env.RESEND_API_BASE_URL ?? "https://api.resend.com";
 
-  if (!apiKey || !domain || !toEmail || !fromEmail) {
+  if (!apiKey || !toEmail || !fromEmail) {
     return null;
   }
 
   return {
     apiKey,
-    domain,
     apiBaseUrl,
     toEmail,
     fromEmail
@@ -111,40 +108,35 @@ function buildEmailContent(payload: InquiryPayload) {
 }
 
 export async function sendInquiryEmail(payload: InquiryPayload) {
-  const config = getMailgunConfig();
+  const config = getResendConfig();
 
   if (!config) {
     throw new Error("Email delivery is not configured.");
   }
 
   const { html, text, inquiryType } = buildEmailContent(payload);
-  const formData = new FormData();
+  const subject = `${inquiryType}: ${payload.fullName}${payload.companyName ? ` (${payload.companyName})` : ""}`;
 
-  formData.set("from", config.fromEmail);
-  formData.set("to", config.toEmail);
-  formData.set("h:Reply-To", payload.email);
-  formData.set(
-    "subject",
-    `${inquiryType}: ${payload.fullName}${payload.companyName ? ` (${payload.companyName})` : ""}`
-  );
-  formData.set("text", text);
-  formData.set("html", html);
-
-  const response = await fetch(
-    `${config.apiBaseUrl}/v3/${config.domain}/messages`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Basic ${Buffer.from(`api:${config.apiKey}`).toString("base64")}`
-      },
-      body: formData
-    }
-  );
+  const response = await fetch(`${config.apiBaseUrl}/emails`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${config.apiKey}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      from: config.fromEmail,
+      to: [config.toEmail],
+      reply_to: payload.email,
+      subject,
+      text,
+      html
+    })
+  });
 
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(
-      `Mailgun request failed with status ${response.status}: ${errorText}`
+      `Resend request failed with status ${response.status}: ${errorText}`
     );
   }
 

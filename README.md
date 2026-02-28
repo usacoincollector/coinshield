@@ -17,11 +17,10 @@ Edit product content in `src/data/products.ts`.
 
 ## Email delivery
 
-The wholesale and contact forms send email through Mailgun. Set these environment variables in Vercel:
+The wholesale and contact forms send email through Resend. Set these environment variables in Vercel:
 
-- `MAILGUN_API_KEY`
-- `MAILGUN_DOMAIN`
-- `MAILGUN_API_BASE_URL` (`https://api.mailgun.net` for US, `https://api.eu.mailgun.net` for EU)
+- `RESEND_API_KEY`
+- `RESEND_API_BASE_URL` (`https://api.resend.com`)
 - `INQUIRY_TO_EMAIL`
 - `INQUIRY_FROM_EMAIL`
 
