@@ -36,13 +36,6 @@ export function Navbar() {
               </p>
             </div>
           </Link>
-
-          <Link
-            href="/wholesale"
-            className="hidden rounded-full bg-[var(--foreground)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#0d141b] md:inline-flex"
-          >
-            Inquiry
-          </Link>
         </div>
 
         <nav className="mt-4 flex flex-wrap items-center gap-3 border-t border-[rgba(215,209,197,0.7)] pt-4 md:mt-0 md:border-0 md:pt-0">
@@ -66,12 +59,6 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/wholesale"
-            className="ml-auto inline-flex rounded-full border border-[var(--border)] bg-white px-4 py-2 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--accent)] md:hidden"
-          >
-            Inquiry
-          </Link>
         </nav>
       </div>
     </header>
