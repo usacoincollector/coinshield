@@ -69,7 +69,7 @@ export default function HomePage() {
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/wholesale"
-                  className="inline-flex items-center justify-center rounded-full bg-[var(--foreground)] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#0d141b] hover:text-white"
+                  className="inline-flex items-center justify-center rounded-full bg-[var(--accent-strong)] px-6 py-3 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(142,103,20,0.24)] transition hover:bg-[var(--foreground)] hover:text-white"
                 >
                   Wholesale Inquiries
                 </Link>
