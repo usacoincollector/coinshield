@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
     success: true,
     message:
       parsed.data.formType === "wholesale"
-        ? "Your wholesale inquiry has been received."
+        ? "Thank you for your interest. Your wholesale inquiry has been received, please allow 3-5 days to process your request."
         : "Your message has been received."
   });
 }
