@@ -25,10 +25,10 @@ export default function PrivacyPage() {
           <p>
             If you want us to update or remove submitted information, contact{" "}
             <a
-              href="mailto:hello@coinshieldproducts.com"
+              href="mailto:support@coinshieldproducts.com"
               className="font-semibold text-[var(--foreground)]"
             >
-              hello@coinshieldproducts.com
+              support@coinshieldproducts.com
             </a>
             .
           </p>

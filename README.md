@@ -21,7 +21,7 @@ The wholesale and contact forms send email through Resend. Set these environment
 
 - `RESEND_API_KEY`
 - `RESEND_API_BASE_URL` (`https://api.resend.com`)
-- `INQUIRY_TO_EMAIL`
+- `INQUIRY_TO_EMAIL` (`support@coinshieldproducts.com`)
 - `INQUIRY_FROM_EMAIL`
 
 ## Data sheets

@@ -17,14 +17,21 @@ type ResendConfig = {
   fromEmail: string;
 };
 
+const INQUIRY_TO_EMAIL = "support@coinshieldproducts.com";
+const LEGACY_INQUIRY_TO_EMAIL = "hello@coinshieldproducts.com";
+
 function getResendConfig(): ResendConfig | null {
   const apiKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.INQUIRY_TO_EMAIL;
+  const configuredToEmail = process.env.INQUIRY_TO_EMAIL;
+  const toEmail =
+    !configuredToEmail || configuredToEmail === LEGACY_INQUIRY_TO_EMAIL
+      ? INQUIRY_TO_EMAIL
+      : configuredToEmail;
   const fromEmail = process.env.INQUIRY_FROM_EMAIL;
   const apiBaseUrl =
     process.env.RESEND_API_BASE_URL ?? "https://api.resend.com";
 
-  if (!apiKey || !toEmail || !fromEmail) {
+  if (!apiKey || !fromEmail) {
     return null;
   }
 

@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
       {
         success: false,
         message:
-          "We could not deliver your message right now. Please email hello@coinshieldproducts.com directly."
+          "We could not deliver your message right now. Please email support@coinshieldproducts.com directly."
       },
       { status: 503 }
     );

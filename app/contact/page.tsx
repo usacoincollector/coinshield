@@ -35,10 +35,10 @@ export default function ContactPage() {
               Email
             </p>
             <Link
-              href="mailto:hello@coinshieldproducts.com"
+              href="mailto:support@coinshieldproducts.com"
               className="mt-3 inline-block text-xl font-semibold hover:text-[var(--accent-strong)]"
             >
-              hello@coinshieldproducts.com
+              support@coinshieldproducts.com
             </Link>
           </div>
         </section>
